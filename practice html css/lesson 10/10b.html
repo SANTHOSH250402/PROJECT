@@ -1,0 +1,198 @@
+<html>
+    <head>
+        <title>
+            nested layouts
+        </title>
+
+        <style>
+            .inline{
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .block{
+                display: block;
+                vertical-align: middle;
+            }
+        </style>
+    </head>
+    <body style="font-family: arial;
+    font-size: medium;">
+        
+        <div class="block" style="width: fit-content;
+        padding-top: 10px;
+        padding-bottom: 10px;">
+
+            <div class="inline" 
+            style="margin-left: 20px;
+            padding-left: 10px;
+            padding-right: 10px;">
+
+                <img src="data:image/jpeg;base64,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" alt="This is a dog!!!" 
+                style="border-radius: 100%;
+                object-fit: cover;
+                height: 80px;
+                width: 80px;">
+
+            </div>
+
+            <div class="inline" style="padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+            padding-right: 150px;">
+
+                <div class="block"
+                style="color: black;
+                font-weight: bold;
+                margin-bottom: 3px;">
+                    Oliver
+                </div>
+
+                <div class="block"
+                style="color: gray;
+                margin-bottom: 3px;">
+                    the dog
+                </div>
+
+                <div class="block"
+                style="color: gray;">
+                    popular
+                </div>
+
+            </div>
+
+            <div class="inline" style="padding-right: 20px;">
+                <button style="background-color: blue;
+                color: white;
+                border: none;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border-radius: 4px;
+                padding-right: 10px;
+                cursor: pointer;">
+                    Follow
+                </button>
+            </div>
+
+        </div>
+
+        <div class="block" style="width: fit-content;
+        padding-top: 10px;
+        padding-bottom: 10px;">
+
+            <div class="inline" 
+            style="margin-left: 20px;
+            padding-left: 10px;
+            padding-right: 10px;">
+
+                <img src="data:image/jpeg;base64,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" alt="This is a cat!!!" 
+                style="border-radius: 100%;
+                object-fit: cover;
+                height: 80px;
+                width: 80px;">
+
+            </div>
+
+            <div class="inline" style="padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+            padding-right: 150px;">
+
+                <div class="block"
+                style="color: black;
+                font-weight: bold;
+                margin-bottom: 3px;">
+                    Miami
+                </div>
+
+                <div class="block"
+                style="color: gray;
+                margin-bottom: 3px;">
+                    the cat
+                </div>
+
+                <div class="block"
+                style="color: gray;">
+                    popular
+                </div>
+
+            </div>
+
+            <div class="inline" style="padding-right: 20px;">
+                <button style="background-color: blue;
+                color: white;
+                border: none;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border-radius: 4px;
+                padding-right: 10px;
+                cursor: pointer;">
+                    Follow
+                </button>
+            </div>
+
+        </div>
+
+        <div class="block" style="width: fit-content;
+        padding-top: 10px;
+        padding-bottom: 10px;">
+
+            <div class="inline" 
+            style="margin-left: 20px;
+            padding-left: 10px;
+            padding-right: 10px;">
+
+                <img src="data:image/jpeg;base64,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" alt="This is a dog!!!" 
+                style="border-radius: 100%;
+                object-fit: cover;
+                height: 80px;
+                width: 80px;">
+
+            </div>
+
+            <div class="inline" style="padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+            padding-right: 95px;">
+
+                <div class="block"
+                style="color: black;
+                font-weight: bold;
+                margin-bottom: 3px;">
+                    Rex
+                </div>
+
+                <div class="block"
+                style="color: gray;
+                margin-bottom: 3px;">
+                    Happy Hamster
+                </div>
+
+                <div class="block"
+                style="color: gray;">
+                    popular
+                </div>
+
+            </div>
+
+            <div class="inline" style="padding-right: 20px;">
+                <button style="background-color: blue;
+                color: white;
+                border: none;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border-radius: 4px;
+                padding-right: 10px;
+                cursor: pointer;">
+                    Follow
+                </button>
+            </div>
+
+        </div>
+    </body>
+</html>

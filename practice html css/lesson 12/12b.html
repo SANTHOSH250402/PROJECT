@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>
+            nested flexboxes
+        </title>
+    </head>
+    <body>
+        
+        <div style="display: flex;
+        flex-direction: row;
+        border-style: solid;
+        width: fit-content;
+        padding: 0.5%;
+        border-width: 1px;">
+
+            <div style="background-color: lightpink;
+            color: lightpink;
+            width: 100px;
+            height: 60px;">
+            .
+            </div>
+
+            <div style="background-color: lightblue;
+            color: lightblue;
+            width: 500px;">
+
+                <div style="color: black;
+                margin-top: 5px;
+                display: flex;
+                flex-direction: row;">
+                    row1
+                </div>
+
+                <div style="display: flex;
+                flex-direction: row;
+                justify-content: space-between;">
+
+                    <div style="background-color: black;
+                    color: white;
+                    width: fit-content;">
+                        row2
+                    </div>
+
+                    <div style="background-color: black;
+                    color: white;
+                    width: fit-content;">
+                        row2
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+</html>
