@@ -1,0 +1,751 @@
+<html>
+    <head>
+        <title>
+            Youtube.com
+        </title>
+        <style>
+            .header{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 80px;
+
+                border-width: 1px;
+                border-style: solid;
+                border-color: gray;
+                box-shadow: 2px 0px 8px gray;
+                min-width: 1000px;
+                background-color: white;
+            }
+
+            .sidebar{
+                display: flex;
+                flex-direction: column;
+
+                position: fixed;
+                top: 80px;
+                left: 0px;
+                bottom: 0px;
+                width: 80px;
+                border: none;
+                box-shadow: 2px 4px 8px gray;
+                justify-content: space-between;
+                font-family: Arial;
+                font-size: 15px;
+                padding-bottom: 20px;
+                min-height: 500px;
+                background-color: white;
+            }
+
+            .grid{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                margin-left: 80px;
+                margin-top: 25px;
+            }
+            .info{
+                display: grid;
+                grid-template-columns: 50px 1fr;
+            }
+
+        </style>
+    </head>
+    <body style="font-family: Arial;">
+        <div class="Header">
+
+            <div style="display: flex;
+            flex-direction: row;">
+
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAWlBMVEX///8AAADt7e38/PyFhYWamprp6eni4uJ1dXUbGxvY2Nj5+fkEBASenp7v7++7u7umpqbe3t7Hx8eTk5Ovr6+AgIDV1dWpqal2dnZvb2+1tbW+vr7Ly8uJiYlHRMXAAAAB00lEQVR4nO3c2ZaaQBQF0JJyijhhq20b8/+/mWL1YxCttGkC7P2KD8WhhntxLcKE0PUA/gOhIAAAAAAAAAAAAAAAAAAAAAAwHjH5dz/vhxjKrJuKYXAZ1M+1mGcphhdCGabrHxkmb10P+eXS8p7mfbJn1vWQ/0L7Cq7nQUYA63U/M2jdyUeRwYPTLF08DX8tlK1X0zx4/1guL8tnfVy/adwvFMNhHtqmwuCOuj/FsNnPB1nePS9lsN3NR/G4W2yK8roYdQT1PIhxt+h6HN2apQzKn3f2hFjm7hS93Fk223RAri7zOxmERYaqquZ9zGC2rarb/rBqLJrza6Re9kz71fFY7dITb3pTMIqeKYbZJh7Ox6L5dCwz+4VeZhBCOheL92LfvJmNpmeK4Xb+dSeDMIKeKdbHX9heb40ZxLpnOk2fdzrtvv8evqyeB3UR0FwIxLxXqqGn9UH7qLPvqJcRAE+xvtO5sFg977w697JnapXOjEtejdTLnqlVfq286XrIL5fZN/azX3ggcx5MBphBXSoPv2d6IM2D3SzH26HrIb/cuP98+RTzGseB/mGVd0/DzAAAAAAAAAAAAAAAAAAAAAAAAAAAAICvKgh53/8eJBlMJr8BvNUcOPeZsLEAAAAASUVORK5CYII=" alt="wait!!"
+                style="height: 80px;
+                width: 80px;
+                object-fit: cover;
+                background-color: transparent;">
+
+                <a href="https://www.youtube.com/" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAA81BMVEX////+AAAoKCgmJiYjIyMAAAD7AAAQEBD6+voYGBhNTU0TExORkZG5ubkHBwfIyMjz8/M4ODhvb2+urq5aWloeHh6oqKjV1dX6bnAbGxvt7e12dnbf39/5//98fHwvLy9EREShoaFnZ2f//P/l5eU8PDzPz8+IiIjFxcX+3t70AABXV1eZmZmEhIT7KCe3t7f76On98vH/7PD86+b6zcn9t7L9pqH2l5T6hof+aWv9YF7+U1T/SU35PD35IyP6Gxf9tK34LzD3amL5oaH819P9iX/7vb78kpj8e3f6x779Q0L39Oj4fXb539X6OzP5foD2pKVMzJ7HAAAL1ElEQVR4nO2cC1vaSBfHY64TAwHEGBMdQG5axBaqra20tXRbX1+76/b7f5qda0jCJUCAus+ef58iCWGS+XFm5syZkygKCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAv271VKweIdTn6S30x+22J/WVq7q3yGEFUwpkf+YvMFoOBy+HXC9iiR2XA8GwyFCCv8K+UPIIYT/s/wwqTzG169u3r2//XD88W706fN4/OW+Z5rmnklf07r/8nr89Gl09/Hxw+37h5tXA8b8d1fjtwnjrx/HDNbeHn1lf+grk4TG3otPTHkMU2/87R1+KfgQ185Oh/H7CNXaMvf+QC+BIOoYTHp5R+fDgydiP3npEX26jvd/pz5XqEhDKIs9/iqWEfpdf5ba86qzr6tEWmVH+JThvbkBfD2z1xtfx8yvb7iW67rGSbTnwnCpjMYqV1c1LHeGjPM5x+8UHx1pn0jV9/I2XlqCaY7ooC2KPjVUpk50sr7Ndjhnq1zhG0edJbsw5/jdWl8L/+rl7vekeiYZQKKWqbF6alZUj6bH9rj+Khf4xnrB+FoYPZv5xw0uUtAYT4a8WsAqakha5c46FXvh+G5In7UZesxF/D6xvqLL22pVbLc5iOBkzrXM1ovGp+AfG2IndDvxnkNece+AV0vitN6sdIFVPt64geDmvaShQ1E+bRbfnTLxSi5ZRfSG2CywkUPz5rkcs9W+KFF1+bdV76TLtkunc47f7ciL7jeL7zWa+C59Nmhqesg3DznN/fWutGgtbrRSu7W+4aY6PqHeYFK2L1prl9dL5+aTVf85epn4vi/0+FYek829V5OyyxVWE+HnCT/Q6K53oS8T30MGoZX53cQKP/B4d8U2+Mih2WvO5V8mvl8Z9Fa1P+I4RxVhTodGxg5Wk3M2durNNS/0JeLDyu1CPKb57X89OiFenuJtrPg29zYcNnbwalnUC2QG6B9dHRzU+iW2MXmZIbZ/Dr6p78TwIaVc7PeP0r1FeHFWuKqdH3WRkjus9biQS888xoM74g8vPbEzf8RLb7CquBe0Wg6bxBltVmNUrRuW5+mebbjnoaxG1dV0Iu+QbfUt8l7TAu43JvEdejo5VLOO2Fbdo18T5xH4OqFSvjKMwHYM/SJ2Sf6l4TqB53mOYRXy0sN3i2EQfC38/6fl27D5GI/58QZr9+llG9wJRNRiwksjNoEISuLwKkWkqRIfDxbos/Fxu+b46Jfoz1RS4tYX1m2NlacaE35nhj45s3uZs4XjxV6zuXdMZxHo6/3S+D7G8ZWMqL+rMhgBmyyUK3IOweqtWRcxfGqEz16Aj0OwJD51YuWR9TUmoByJqWrQM2rR/nV7YolvnImPqvXzR49ob4k2fJco3+CIFBlAoDVEMvSiapr8G8bx6Uvjc5L44ta3X7MjeprDv4VCQ/xikqxxoeTSl2XwYdTCf93RHjAb3yhRfJNdJ+nwxMihUk4X3J1WPa3OrVALapvGp+qe7niOwKRXlPjXPL0S6MwK9cs88LCyeM4m8NF1OIwfPpvZ1mc+JbrjqitsLuTX3YxVImiG5bOAm4MRbhqfqteLbV82YIdNkcU0yGu20WmD94vGajPwNL8MGKLx8jVw9N40swYR8zmBj081goLis9rbdALS9lib5Z7ZiQihVumAvEl8mk7B+GKIskq0fBF2sOgnJY7SXS3+kxJaEh8/WPn5ZxY/c5zAh9iPTJrIERs5HBo6vYiDEPXjUa1N4rPYD6Lsa3Ir+pbHGywf10W3sS6+rClbAh9uKaQLXDyTez1MnODcZpag1DxmcHSXtAHurgjzqGwYn5x1iEKY7yTm4B4n1tFi59oFPoVlcLx7XriwlMLHTc3xaaU0fuEiiM+7I1F1zUPbwSd9oSslmgQFV+wTbpdaIwc9jDKaYhofQ75gUd1M4wvpCEeqyS6cuwmy6hxfnbcup70dfGKUZ2GLU7FawAPVPJirVnaLj2az3MwNEk7h4xXV+E9tlCf1S+GzTreDryv6Vjrkd2cVUd8xPmXw5/zhYxrfGeuiY4Fm1NFm4GOrl1vA5xusfDaREZYoimiKEToHPmW4St9Hpr/k8m7vF44daXz+ZJnb6TN8cXsj+ETVu9vBJ4K0+j6Klv7YMKIoB8KFzoNvpaGjRVruwzjDc07jk+alyhXfsthO4SvtHB/3OL08UZeV/D6Mv48ys2HG6csRjjGpUZ19VPZm4WNRg+3h02ikhxehBQl8QR58eHnro51eby/TbX5OX05RxqaEh1q2ZzVeq7hVfCxQJlbctXqlXq9XRNxl3cUDrqXmvGSIwRi9v18m7PeUvpxQ4uOev1J2Zlrfmy3hcwW+clRELGBFi8iFb6mIC2qJTm+JqN9o6hQN7p+qdvt34OMjbxJfXLnwLRfvw/ivUY/lsGTju5vKMD0TUeNLHpLfbeP1ZeON4dM9Ihqvp69GLnyZ0WZKY/A3z2TOhpeKNvOKxxx/is+b6bhsaejwY31fURZfi+kkF77Fax0985hO0pbq9AS+x6lzpPElQnCR27wlfKUYPhHqWTFHaaEeF8Mwj/HNcy8zyhf7xo+pU6TwoXoSn6j6ltxmgYz5fXLWUVU2pqx13tE3mvi8TJRefOE2q/GiSmLSVhFV39KkrRrD1xU5NxvEtzjLwFw1y8U0302dIo2vkZzzcjciX8hAm4vvyJkU6VtxfKjMe71cjstDFo+V6BF8N1nWNztgZeUKWM3HJxaLWcSlnUh39b3G/mHzYM2EL6HvGXxWThF6lYlPzOKSfZ9d3g4+cTJ28nYis79k0ISGoJEDHlbebiytnut+MHWSND4RrHd57omcSCl58Klz8e2zcC1drCJjPv+pxKIvv6x1szU5PppdulGAY5RpfW8sViMa+EDRnJStYFajjgqRf4UgE599xI7Up61PpSlC5DNeosa8crlUdML6OxGIzLPW0cKt0Wbxjaa74jS+UwGJumI8C0ZTLdag+KqwpnUok1A0yZn4RKyTx91l8n0CH+/hxIyHrwXI7GqNJl+J9CWx8LGu8IeN4jNvp+9LTeOTCQcOufKiqB5frRaRddU+KSt+Ry53z8J3JTIwiA+HqnIqm1wmdwvtdl9O03gTFcvkLPRT4Gd2i3nosfs6NnZbDLuvIxufrK9Tb4h3PPtALoWRbUt1dV0sJc7CdySRWXpgkY4unWFFMzACw5CRblvcByaWh+xOsyIDF3lyrHALo8+bu6tozxzPyDicwoekYckUIXmfFjqMZY+p9ZI1F99pIL9K/trnvFUmrK8TD0sZIrlf3men6TLkXcjn9yn418Zy64n1vZvcEjgXHxsv4iE31ThLHsp3XoTz8SnNKMVN1W3EneM4PqdamISn7Jr0js9ieYX0g8Nc8NhDHDZyRyW/p3I064ZowoSaWfxmLF8PRBCQVt/oRx80ZVaZblSFoyHwifFaeB1KGEhDDeptMZs1InxkLPKVQ8nP60xa6Jkl1w6ICRq5wi1ceGP385qff846gRge9Pi9bGHNszxdJX6rY13Gko9R0wh0XQvcRpdO71zLsgzeLxbFXUVyluBXLJqga7sHIQ1LWfRInh5J2z31W5SC5jpeYBvNMEbp9EB3Hcd2LFc7LOVsuQwfvt7E3eTEgkeDmXfjo5Ar2Um3j2r7jc7+QT91e+pFbb/TOCmyHN72KRPbX06XUj5qNjqX5+xTxI7z2WfiOEomLBZqJwUfTSjRN2HpqF/oV7u5UtMmtcMKfZZBztZLCvi18rMM+AMb0hYgH+Mw2zLiOfj0SIQyZ/2x0Ww7T4jA+OvxWDwuQz4yw4yjiXaacpc0Obbzfvzt4QU8BuI3CbdaSJHPcXmkz3F5+jx+LZ7jMnngSISyd//l9fPTiD/H5Rc8x4Wm7rGHCHFRIx8Oh4OZjxG6Hrx9+zb5FCGFtZ//7FOEFG46c8wn1qNh+R7HdrRayYNAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCLR9/QPW3CaKZaDN7gAAAABJRU5ErkJggg==" alt="wait!!"
+                    style="cursor: pointer;
+                    height: 80px;
+                    width: 160px;
+                    background-color: transparent;">
+                </a>
+
+            </div>
+
+            <div style="display: flex;
+            flex-direction: row;
+            justify-content: center;">  
+
+                <div>
+                    <input type="text" placeholder="Search"
+                    style="height: 30px;
+                    width: 350px;
+                    margin-top: 20px;
+                    padding: 5%;
+                    border-radius: 6px;
+                    border-style: solid;
+                    border-color: gray;
+                    border-width: 1px;
+                    min-width: 300px;">        
+                </div>
+
+                <div>
+                    <img src="data:image/png;base64,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" alt="wait!!"
+                    style="background-color: transparent;
+                    height: 25px;
+                    width: 25px;
+                    object-fit: cover;border-style: solid;
+                    border-width: 1px;
+                    border-color: gray;
+                    border-radius: 6px;
+                    padding: 20%;
+                    margin-top: 20px;
+                    cursor: pointer;">
+                </div>
+            </div>
+
+            <div style="display: flex;flex-direction: row;
+            justify-content: space-between;
+            padding-right: 50px;">
+                
+                <div>
+                    <img src="data:image/png;base64,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" alt="wait!!"
+                    style="background-color: transparent;
+                    height: 40px;
+                    width: 40px;
+                    object-fit: cover;
+                    margin-top: 20px;
+                    padding-right: 40px;
+                    cursor: pointer;
+                    width: fit-content;">
+                </div>
+
+                <div>
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAADv7+9eXl5/f3+fn5/S0tKTk5OZmZnX19dkZGSFhYX39/f8/PzHx8dhYWFERETg4ODo6Ohzc3OOjo6xsbFWVlYiIiLOzs67u7ujo6N4eHg1NTVoaGizs7PAwMAQEBA9PT0bGxtJSUkoKChQUFBubm4wMDB9jshWAAAE90lEQVR4nO2dbVfiMBBGKaJSBQREEVAUd1f//z/c5aDnqDwT2s4kk3af+93JXG3TyYtJr0cIIYQQQgghhBBCCCH5UW6Hi+G29E4jFrNN8clm5p1MBEZXxVeuRt4JWfNQ/GTinZItqyPBolh5J2XJ8V9wz4N3WnaMoGBRdOddvBIMr7wTs2ImCBZFVz4aG9Fw452aEaJgUXinZkMZMOxGAXcXMLzzTs6EYcBw6J2cCZcBw0vv5EygYfuhYfvpvuEiYLjwTk7PZPAaECyK18Gzd4oanqVh03duWio5v66kd+B67p1ubS7ua/jtub/wTrkW5a+afnum7XHsnzXw23PWkmc1NJY4RRu+j7PfCsGiWGY/dXOu8tuT95BxXLcHRfwZe2vIzF8MBP+RbYdzYeNXZDvf/2wmmOmqDVpe6pSirWCGinj9TENmK6jy4ktzsvr2SwuEXzi7XJX9w5du3C9XlxVq15yWF6fhVKdr9PeYrU/82C65h0h4rDuUP+D9cJV+ndAhSKiXWW5P/PBqGfjpTHqbcSDFKmtLobWpPErUNzG/22oJjm/FCG+Rc6+E/IxWf8YmYowcKlRpPnRXp7Mf7YQor9HyrsxaSK3uThJpanUdJesaSN1M/V0W0o4N785GWJRoso1EUHRe2hDKtadGwZ5wMN/iDdckTcutHYzmOzVl+1sXngjTjGuyhRk1n53HMz2em24eUUKaehnW8I9m+dYGjnt132hYP/iNheFvXDcegPWb3ygKZXOvjAlnzU2ybQCsubVPFHzyvepv9JDqNzbfZPSYol5Bv2EUbUd1GmHMQSpTg7hofspnrQaNmyxmqtHsuc8YChXKJoFB3GalfIREbk0Co2kbk8A1Qa+hzewf+up7vIhoudAoNIjssTEMbKo8MwoN6hqPbSjgy2zV44Fe+sYodB3AbLzV/4eAj/7SKHQdwMtiNS2GJvCMQtcAdKXvZsHfj4On70zBhIPdIgNYCkm/cRHUVnaTYmAKL/3OBdDf2SUBZrjSV6bgc2g3TgVj6/QfxMFxEnYTRmCgPzALXhVQHvfNgvePg9sU9XUAYye7VSIw+Z1+/ASKNsPox8HTl21gx49h9OPgVlV9dWiog4YpoKEOGqaAhjpomAIa6qBhCmiog4YpoKEOGqaAhjpomAIa6qBhCmiog4YpoKEOGqaAhjpomAIa6qBhCmiog4YpoKEOGqaAhjpomILuG3Z+fyk638EwPIie+B8u4AEWhvFR+KSK+IQOwwZg/ISKwmGzhi3gBpIpSqfpGjYhtJBIUTwu2LANqYkkivJ5yIaNiG0kUAwc+GzYitxIdMXQidaGzQRaiawYPLJ7YEeomaiKdmeSa4iomIdgRMVcBKMp5iMYSTEnwSiKeQlGUMxN0FwxP0FjxdB1sH5YKmouOIqH5cGm+huAYnBOQxrS0B0a0vAroQtv/bA8smbUz5GcbtohhBBC/mfmw/PTBO5ly59q8ztWB7t6AM7OA9id1edAJUPvJFXsKghmdJFjA4QLr77hfGWVkipdTZs7mh48E/sHHudYWxK6oPKA521OJpy6bv3FO0E18vWUBzK5TFWDfMnonvSH50YAXl32geOFY4aM5f502ZHpsrH0V3zsiGBPehc78Q5+Mjn+aLx0oBf9xt33t3HZ+g89oFzsPvR2i5bXogH6ZVm2esBLCCGEEEIIIYQQL/4Ca2091Xgh92wAAAAASUVORK5CYII=" alt="wait!!"
+                    style="background-color: transparent;
+                    height: 40px;
+                    width: 40px;
+                    object-fit: cover;
+                    margin-top: 20px;
+                    padding-right: 40px;
+                    cursor: pointer;">
+                </div>
+
+                <div>
+                    <img src="https://yt3.ggpht.com/lC_TaxyDLzxb-KABzaoTMv0F_6XoKLGIXZOTj6PgU5h_8hAoB5YFgNSmqIQnKIpGv30zh3Mk=s88-c-k-c0x00ffffff-no-rj" alt="wait!!"
+                    style="height: 40px;
+                    width: 40px;
+                    object-fit: cover;
+                    margin-top: 20px;
+                    border-radius: 100%;
+                    cursor: pointer;">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div style="border:none;
+        margin-top: 85px;
+        margin-left: 75px;
+        box-shadow: 6px 4px 16px grey;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 20px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        width: 100%;">
+
+            <div style="display: flex;
+            flex-direction: row;
+            margin-top: 0px;
+            justify-content: center ;
+            margin-left: 0px;">
+            <u> RECENTLY POSTED </u>
+            </div>
+
+            <div style="display: flex;
+            flex-direction: row;
+            margin-top: 30px;
+            justify-content: space-around;
+            margin-left: 0px;">
+
+                <div style="display: flex;
+                flex-direction: column;
+                align-items: center;">
+                    
+                    <div>
+                        <a href="https://www.youtube.com/@freecodecamp" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/APkrFKaqca-xQcJtp1Pqv-APucCa0nToHYGPVT00YBGOSw=s176-c-k-c0x00ffffff-no-rj-mo" alt="img 1"
+                        style="height: 60px;
+                        width: 60px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        box-shadow: 8px 0px 16px gray;"></a>
+                    </div>
+
+                    <div style="margin-top: 5px;
+                    font-family: Arial;">
+                    <a href="https://www.youtube.com/@freecodecamp" target="_blank"> Free Code Camp </a>
+                    </div>
+                </div>
+
+                <div style="display: flex;
+                flex-direction: column;
+                align-items: center;">
+                    
+                    <div>
+                        <a href="https://www.youtube.com/@SuperSimpleDev" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/APkrFKaEovkjwOFQ3HMD8S5KFvjayVFtNBn2ofFrA9Xw=s176-c-k-c0x00ffffff-no-rj-mo" alt="img 1"
+                        style="height: 60px;
+                        width: 60px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        cursor:pointer;
+                        box-shadow: 8px 0px 16px gray;"></a>
+                    </div>
+
+                    <div style="margin-top: 5px;
+                    font-family: Arial;
+                    cursor: pointer;">
+                        <a href="https://www.youtube.com/@SuperSimpleDev" target="_blank">Super Simple Dev</a>
+                    </div>
+                </div>
+
+                <div style="display: flex;
+                flex-direction: column;
+                align-items: center;">
+                    
+                    <div>
+                        <a href="https://www.youtube.com/@A2DChannel" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/APkrFKZZcnhhCsP6n7ePUBbwW32mebQEmJNTsc3P-Gua=s176-c-k-c0x00ffffff-no-rj-mo" alt="img 1"
+                        style="height: 60px;
+                        width: 60px;
+                        object-fit: cover;
+                        box-shadow: 8px 0px 16px gray;
+                        border-radius: 100%;"></a>
+                    </div>
+
+                    <div style="margin-top: 5px;
+                    font-family: Arial;">
+                        <a href="https://www.youtube.com/@A2DChannel" target="_blank">A2D Channel</a>
+                    </div>
+                </div>
+                <div style="display: flex;
+                flex-direction: column;
+                align-items: center;">
+                    
+                    <div>
+                        <a href="https://www.youtube.com/@KunalKushwaha" target="_blank"><img src="http://yt3.ggpht.com/scr6Z7X5lGHe4rv7-Tr5HBggBPGOiwSOzF_7eqBS3OIhQWxNr5QD9qCj8-0AkJj6azZ_sQKUj04=s176-c-k-c0x00ffffff-no-rj-mo" alt="img 1"
+                        style="height: 60px;
+                        width: 60px;
+                        object-fit: cover;
+                        box-shadow: 8px 0px 16px gray;
+                        border-radius: 100%;"></a>
+                    </div>
+
+                    <div style="margin-top: 5px;
+                    font-family: Arial;">
+                        <a href="https://www.youtube.com/@KunalKushwaha" target="_blank">Kunal Kushwaha</a>
+                    </div>
+                </div>
+
+                <div style="display: flex;
+                flex-direction: column;
+                align-items: center;">
+                    
+                    <div>
+                        <a href="https://www.youtube.com/@IshanSharma7390" target="_blank"><img src="https://yt3.ggpht.com/omDV4RX5BjOw_R3J8L-qwETRq4qqy_uN5DTo58Trg1HW6TM2ejPGuVjtRjh2BrlGpeRLgaPAtA=s176-c-k-c0x00ffffff-no-rj-mo" alt="img 1"
+                        style="height: 60px;
+                        width: 60px;
+                        object-fit: cover;
+                        box-shadow: 8px 0px 16px gray;
+                        border-radius: 100%;"></a>
+                    </div>
+
+                    <div style="margin-top: 5px;
+                    font-family: Arial;">
+                        <a href="https://www.youtube.com/@IshanSharma7390" target="_blank">Ishan Sharma</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="sidebar">
+            
+            <div>
+                <div>
+                    <a href="https://www.youtube.com/" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAYFBMVEX///8AAABOTk5aWlrr6+ulpaVhYWFoaGhpaWllZWXn5+cRERF0dHTc3Nz39/fv7+8LCwscHBy9vb2GhoYvLy82NjYoKCgiIiI8PDzOzs5HR0d/f3+YmJgUFBSKioqrq6tr7VAsAAACdElEQVR4nO3ZbVOjMBSG4aSLfYEWaqtS7ar//19uYxZEmmhKO2aSc19fdGeCA4/nOXRcpQAAAAAAAAAAAAAAAAAAAAAAAAAAAADI9Df2DcS31MvYtxDbSmu9in0Tcc21MY99GzEttSW4DnPdETsJK/1J6E5Y6KFF7NuJYa6/EliHhR4TNwmrswjE7YRxEQTWYemMQNTnBPcUiJoE1y4QthPO3whDIt4O/iKIqcP3UyBiEr7bBUJ2wk9FEFAH3+eCsYw/J4RNQdaTELILOpnuhJ/fCENZvh3Ci2BlWIdLimBlV4fLI8guhEuLYGVVh8vW4aeMFuOUIljZ1GFaEaxM6jC1CFYWdbhmCjKZhOm7oJP8TriuCFbidbi2CFbSdbjFFBgJT8L1u6CT7E64TRGsROtwqyJYSdbhllNgJDgJobugaqvAk8nthLAirHdlUzflbh10OrE6BBVhX/fn633IBUnVYViEV88DPWy+XLJ5CAghoUkYjvb22f04j/XoovrRffDtfvCPdZTnmaJ46m+6LRr3FIwjOIXgnoT3pu2/fyoiPM1ERfe7uy9V4XyyjeOqjfPknSr7n5ZQBH0IVancGeydVzkX451SZZVgBP/r0JqbdmZw3gSj9mSgijaxIlhF9TEF7gyOnouOngzMJFTJRXB69kNpvzqe69lzjesd8pGBKg8JRtBzZLBtPGebrS+DtDkyOHgPH8Rk8OI9/CImg5n38IwMyECRgUEGZGCQARkYZEAGBhmQgUEGZGCQARkYZEAGBhlIykDc3xOb2Z8x33+xKHU8Ozvb/eK9AgAAAAAAAAAAAAAAAAAAAAAAAAAAAPhN/wAZjRbgiANsYQAAAABJRU5ErkJggg==" alt="wait!!"
+                    style="height: 70px;
+                    width: 70px;
+                    object-fit: cover;
+                    margin-left: 4px;"></a>
+                </div>
+                <div style="text-align: center;
+                margin-top: 0px;">
+                    HOME
+                </div>
+            </div> 
+            
+            <div>
+                <div>
+                    <a href="https://www.youtube.com/feed/trending?bp=6gQJRkVleHBsb3Jl" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU0uCjpKfkEsVSD09T10Ef5lqCSDzqAnZVKg&usqp=CAU" alt="wait!!"
+                    style="height: 40px;
+                    width: 40px;
+                    object-fit: cover;
+                    margin-left: 20px;"></a>
+                </div>
+                <div style="text-align: center;
+                margin-top: 5px;">
+                    TRENDING
+                </div>
+            </div>
+            
+            <div>     
+                <div>
+                    <a href="https://www.youtube.com/feed/library" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX///8AAAAnJyeTk5P09PQeHh6FhYWlpaXn5+fk5OSBgYG5ubn19fX4+Ph+fn45OTlTU1Ourq5ERERiYmLs7OyysrIRERFGRkbAwMCdnZ1vb28JCQnc3NyOjo64uLgzMzNlZWUuLi7T09NNTU3/73xNAAAE3klEQVR4nO3di1raQBAF4A0Eq20QiBUSxGrt+79jTVstn81lz+ySmbPd8wBm/o8xYbMXnAtJ2bTHemEmh2PbVEGgD7zdtjCY7a6M46se99qWoeyX6wjA3YO2YzRfQn2lyf48z11Yq54W2oDprK5DgLY79C0nMfBGu3TfSD/FcqVduW9Wwv/FO+3C/XMnAt5rl41E8tAotYvGInj0P2rXjGUJA9faJYPZwzebnXbJaHaocKNdMZotCKR52P8NOF5stOvF02DCW+168bSYkOj7zFuOmPCgXS+eGgKuv2vXi2cBCQeGFT+WJtL/3iGK8Ar6IxfLMgs9koW6yUKfZKFustAnWaibLPRJFuomC32ShbqxInyBrojEirBdhEw/j8WK8FNRfIMu6h1Dwgv941oSFpuv0HX9MiSsyr70zyxGE0ZY0vNvhoSbVU8e+t+FRxReoFOHhP2Lf/rnTmMKi0PsTjUnhKeFpmJQGLlTLQqLQ8ynv0lh1E41Kiw+R9F1sSos6lidalYY7elvWBipUy0Li02MTjUtjNKpxoXFbfLC4im0U80Lg5/+BMLAeyqDMGzsTyEMuqeSCANGVCzCopZ2Ko1Q3KlEQuE9lUkoG/tTCUVPfzKh4Hsqm7A43KQuhO+phELwnsooxMb+lEKoU0mFwB9nFfp3Kq3Q++lPLPS8ALPQb0RFLfTqVHKhx0XYhdNzVPTCyU5NQDhxoRSE40//JISjnZqIcGTsn4pwuFOTERbFffLCgRW4yQgH56dSEQ6/u0lEOPJWIwnh6AxqCsLx9+AJCCfeu9ELv6c+epqeqSEXerwZphZufOahmIV+c4nEQs+5C1ph7TtTyir0n+0mFaY+u+bdoazC5Ge5U1+pAO80YRPia9vIhIL1iVRC0Q4TJqFs7wWRUHgiAY1QvLOERSjfHUQiDDgzg0LoNZZnFobtXyMQBu5BNC8M3kdqXZj8DsvUd8kmv9M5+d3qqZ84EO3MKKvC5E/+SP30luA9+OexKIzXoV0MCiOf2WZOGDRS6os1Yfj30I8xJrzA+ZemhNCckm8sCeN3aBdDwguce9nFirB9ukSHdrEifInxe8u9sSK8XLIwC7tkoW6yMAu7ZKFusjALu2ShbrIwC7v8t8LDlYn8iCDk/MVjROjqmcuLkAMmfJ65vAg5YkLKX4+HhF9mLi9CGkx4M3N5EVJhQr5bzdaBwghnPsybe1RYzlxgaPYlKnRXM5cYmM4BCrk+xIcKF7rdzEUG5ddJNqjQ3c1cZUC2TiQcGGAYzKKUCd1p5kLFOTmh0L3MXKkwf4ASoTsRNOrifTJdInRr87eb5+q9WJHQ/EPj/MAzodCVhr/dPJbnlUqFr636yeRIo959WO0hF77mprl9rp/6fo1WI0+H58/Nv6t1goS/P8veXxRWyMBKnXCh9WQhf7KQP1nInyzkTxbyJwv5k4X8yUL+ZCF/spA//cJtu7SbFtv+1i80nYdymnUWk++tx7PChEftevGAwla7XjygsNGuFw8orLTrxQMK3Va7YDio0Phsbk9QYbnXrhgNKhzYp2A4sHCtXTEaWEi3ehsXMi3G6yIQ8izG+xWB0F1rFw1FIuRZb9hFJHTXRI0qE7qS53YjFBI9NMRCt15yfIGTC19bdccw0ggRvqZq2mO9MJ1NNc34m59s8I28ZRGerwAAAABJRU5ErkJggg==" alt="wait!!!"
+                    style="height: 30px;
+                    width: 30px;
+                    object-fit: cover;
+                    margin-left: 25px;"></a>
+                </div>
+                <div style="text-align: center;
+                margin-top: 5px;">
+                    LIBRARY
+                </div>
+            </div>
+
+            <div>     
+                <div>
+                    <a href="https://www.youtube.com/feed/history" target="_blank"><img src="data:image/png;base64,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" alt="wait!!!"
+                    style="height: 30px;
+                    width: 30px;
+                    object-fit: cover;
+                    margin-left: 25px;"></a>
+                </div>
+                <div style="text-align: center;
+                margin-top: 5px;">
+                    HISTORY
+                </div>
+            </div>
+
+            <div>     
+                <div>
+                    <a href="https://www.youtube.com/shorts/iO7iQzGQpgY" target="_blank"><img src="data:image/png;base64,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" alt="wait!!!"
+                    style="height: 40px;
+                    width: 40px;
+                    object-fit: cover;
+                    margin-left: 20px;"></a>
+                </div>
+                <div style="text-align: center;
+                margin-top: 5px;">
+                    SHORTS
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid">
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=heXQnM99oAI" target="_blank"><img src="https://i.ytimg.com/vi/heXQnM99oAI/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAq4HFsl3or2ibKFXYlpc2LbVIodw" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@freecodecamp" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/APkrFKaqca-xQcJtp1Pqv-APucCa0nToHYGPVT00YBGOSw=s176-c-k-c0x00ffffff-no-rj-mo" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        VS Code Tutorial – Become More Productive
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    freeCodeCamp.org 
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    64k views &#183; 1 day ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=IPvYjXCsTg8" target="_blank"><img src="https://i.ytimg.com/vi/IPvYjXCsTg8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAD72ap9PK8MqXAl3QNvs2xn6PIgA" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@KunalKushwaha" target="_blank"><img src="https://yt3.googleusercontent.com/scr6Z7X5lGHe4rv7-Tr5HBggBPGOiwSOzF_7eqBS3OIhQWxNr5QD9qCj8-0AkJj6azZ_sQKUj04=s176-c-k-c0x00ffffff-no-rj" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        Computer Networking Full Course - OSI Model Deep Dive with Real Life Examples
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    Kunal Kushwaha
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    993k views &#183; 1 year ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=vkSOIkNWCww" target="_blank"><img src="https://i.ytimg.com/vi/vkSOIkNWCww/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCdEOw_RcaXbTTfZm6nSxvZitkTmw" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@IshanSharma7390" target="_blank"><img src="//yt3.ggpht.com/omDV4RX5BjOw_R3J8L-qwETRq4qqy_uN5DTo58Trg1HW6TM2ejPGuVjtRjh2BrlGpeRLgaPAtA=s176-c-k-c0x00ffffff-no-rj-mo" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        How to Become a Graphic Designer | Everything About Graphic Design | Salary, Free Courses
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    Ishan Sharma  
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    821k views &#183; 2 years ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=XBu54nfzxAQ" target="_blank"><img src="https://i.ytimg.com/vi/XBu54nfzxAQ/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBukKpgCeeOp-VBL-fDaXig_mpSBg" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@SuperSimpleDev" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/APkrFKaEovkjwOFQ3HMD8S5KFvjayVFtNBn2ofFrA9Xw=s176-c-k-c0x00ffffff-no-rj" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        Backend web development - a complete overview
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    SuperSimpleDev
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    1.2M views &#183; 1 year ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=zxXXC-vqWng" target="_blank"><img src="https://i.ytimg.com/vi/zxXXC-vqWng/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBxD88SP-lB0wnCrC454QFxQzzUsA" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@SuperSimpleDev" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/APkrFKaEovkjwOFQ3HMD8S5KFvjayVFtNBn2ofFrA9Xw=s176-c-k-c0x00ffffff-no-rj" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        Wordpress vs coding - why devs SHOULD learn Wordpress
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    SuperSimpleDev 
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    216k views &#183; 2 years ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=N07nQ-uUsww" target="_blank"><img src="https://i.ytimg.com/vi/N07nQ-uUsww/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBRDavXKudsVsBDrk6R5pG9qY4aPw" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@freecodecamp" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/APkrFKaqca-xQcJtp1Pqv-APucCa0nToHYGPVT00YBGOSw=s176-c-k-c0x00ffffff-no-rj-mo" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        Is College Worth It in 2023?
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    freeCodeCamp.org 
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    42k views &#183; 1 month ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=msyGybzCKRs" target="_blank"><img src="https://i.ytimg.com/vi/msyGybzCKRs/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDNGW9W_OOIzu5z-yCTfyFl0tAYQw" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@KunalKushwaha" target="_blank"><img src="https://yt3.googleusercontent.com/scr6Z7X5lGHe4rv7-Tr5HBggBPGOiwSOzF_7eqBS3OIhQWxNr5QD9qCj8-0AkJj6azZ_sQKUj04=s176-c-k-c0x00ffffff-no-rj" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        What is Open Source & How to Start?
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    Kunal Kushwaha 
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    307k views &#183; 2 years ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=KUpAMAQtOow" target="_blank"><img src="https://i.ytimg.com/vi/KUpAMAQtOow/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCmdz6O1iHqlMJHD46y7BG9_Fo-xw" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@IshanSharma7390" target="_blank"><img src="//yt3.ggpht.com/omDV4RX5BjOw_R3J8L-qwETRq4qqy_uN5DTo58Trg1HW6TM2ejPGuVjtRjh2BrlGpeRLgaPAtA=s176-c-k-c0x00ffffff-no-rj-mo" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        Google Launched a FREE Python Course!🔥(+ FREE Google Certificate)
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    Ishan Sharma 
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    556k views &#183; 1 year ago
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 25px;"> 
+                
+                <a href="https://www.youtube.com/watch?v=r40DtAzZvcY" target="_blank"><img src="https://i.ytimg.com/vi/r40DtAzZvcY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC_luyacws7u1cxsi97uwQDRarJGQ" alt="Thumbnail!!"
+                style="width: 340px;
+                height: 190px;
+                padding-left: 12.5%;
+                border-radius: 12px;"></a>
+
+                <div class="Info">
+
+                    <div>
+                        <a href="https://www.youtube.com/@KunalKushwaha" target="_blank"><img src="https://yt3.googleusercontent.com/scr6Z7X5lGHe4rv7-Tr5HBggBPGOiwSOzF_7eqBS3OIhQWxNr5QD9qCj8-0AkJj6azZ_sQKUj04=s176-c-k-c0x00ffffff-no-rj" alt="profile pic!!!"
+                        style="height: 36px;
+                        width: 36px;
+                        object-fit: cover;
+                        border-radius: 100%;
+                        margin-left: 120%;
+                        margin-top: 30%;"></a>
+                    </div>
+
+                    <div style="margin-top: 4%;
+                    margin-left: 15%;
+                    width: 280px;
+                    font-weight: bold;">
+                        Remote DevOps Salary Comparisons - x3 of FAANG India (40+ LPA) 😱
+                    </div>
+
+                </div>
+
+                <div style="width: fit-content;
+                margin-top: 15px;
+                color: grey;
+                margin-left: 24%;">
+                    Kunal Kushwaha 
+                </div>
+                <div style="width: fit-content;
+                margin-top: 5px;
+                color: grey;
+                margin-left: 24%;">
+                    281k views &#183; 1 year ago
+                </div>
+
+            </div>
+
+
+        </div>
+    </body>
+</html>
